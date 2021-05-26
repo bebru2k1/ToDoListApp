@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-const Lists = require("./List")
+const List = require("./List")
 const User = require("./User")
 
 const connectDB = async () => {
@@ -17,7 +17,7 @@ const connectDB = async () => {
     }
 }
 const db = {}
-db.list = Lists
+db.list = List
 db.user = User
 db.connect = connectDB
 

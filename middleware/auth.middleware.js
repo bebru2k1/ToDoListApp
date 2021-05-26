@@ -1,14 +1,20 @@
 const db = require('../Models')
 const User = db.user
-module.exports.checkUserNameAndEmail = (req, res, next) => {
-    const { username, email } = req.body
+
+module.exports.checkUserName = (req, res, next) => {
+    const { username } = req.body
     //Check Database username and password
-    Promise.all([User.findOne({ username }), User.findOne({ email })]).then(([userHasName, userHasEmail]) => {
-        if (userHasName || userHasEmail) return res.status(403).json({ success: false, message: 'username or/and adlrealy exist' })
-
+    try {
+        const user = User.findOne({ username })
+        if (user) return res.status(401).json({
+            success: false,
+            message: 'username and / or password is exits'
+        })
         next()
-    })
+    } catch (error) {
+        console.log(error)
+    }
 
-
-
+    next()
 }
+
